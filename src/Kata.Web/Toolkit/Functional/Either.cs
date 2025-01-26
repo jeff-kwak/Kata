@@ -25,6 +25,26 @@ public class Either<TOk, TProblem>
     public static implicit operator Either<TOk, TProblem>(TOk ok) => Ok(ok);
     public static implicit operator Either<TOk, TProblem>(TProblem problem) => Problem(problem);
 
-    public R Match<R>(Func<TOk, R> ok, Func<TProblem, R> problem) => _isOk ? ok(_ok!) : problem(_problem!);
-}
 
+    public R Match<R>(Func<TOk, R> ok, Func<TProblem, R> problem) => _isOk ? ok(_ok!) : problem(_problem!);
+
+
+    public Either<R, TProblem> Map<R>(Func<TOk, R> mapper) =>
+        Match(
+            ok => Either<R, TProblem>.Ok(mapper(ok!)),
+            Either<R, TProblem>.Problem
+        );
+
+
+    public Either<R, TProblem> Bind<R>(Func<TOk, Either<R, TProblem>> binder) =>
+        Match(
+            ok => binder(ok!),
+            Either<R, TProblem>.Problem
+        );
+
+
+    public override string ToString() =>
+        Match(ok => $"{ok}", problem => $"{problem}");
+
+
+}
