@@ -2,6 +2,7 @@ using Marten;
 using Weasel.Core;
 using Kata.Web.Auth.UseCases;
 using Kata.Web.Toolkit.Http;
+using Kata.Web.Adapter.Database.Marten;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,9 +17,9 @@ builder.Services.AddMarten(opts => {
     }
 });
 
-builder.Services.AddSingleton<MartenDatabase>();
-builder.Services.AddScoped<SaveUserHandler>(sp => sp.GetRequiredService<MartenDatabase>().SaveUser);
-builder.Services.AddScoped<FetchAllAuthUsersHandler>(sp => sp.GetRequiredService<MartenDatabase>().FetchAllAuthUsers);
+builder.Services.AddSingleton<Database>();
+builder.Services.AddScoped<SaveUserHandler>(sp => sp.GetRequiredService<Database>().SaveUser);
+builder.Services.AddScoped<FetchAllAuthUsersHandler>(sp => sp.GetRequiredService<Database>().FetchAllAuthUsers);
 
 var app = builder.Build();
 
