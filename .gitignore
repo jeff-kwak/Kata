@@ -479,6 +479,11 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+*.Identifier
 
 # Vim temporary swap files
 *.swp
+
+# Git files
+*.patch
+

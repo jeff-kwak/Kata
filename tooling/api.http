@@ -1,0 +1,11 @@
+### Create a User
+POST http://localhost:5000/auth/users
+Content-Type: application/json
+
+{
+  "username": "Hello, there."
+}
+
+### Get all Users
+GET http://localhost:5000/auth/users
+Accept: application/json
